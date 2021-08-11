@@ -1,0 +1,46 @@
+﻿@using System.Diagnostics
+
+<h3>ComponentLifeCycle</h3>
+
+<p>
+    FirstName:@FirstName
+</p>
+
+<p>
+    FirstName:@LastName
+</p>
+
+<p>
+    FirstName:@JobTitle
+</p>
+
+@code {
+
+    [Parameter]
+    public string FirstName { get; set; }
+
+    [Parameter]
+    public string JobTitle { get; set; }
+
+    [Parameter]
+    public string LastName { get; set; }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        Trace.WriteLine($"Entering SetParametersAsync:");
+
+        int count = 1;
+        foreach (var param in parameters)
+        {
+            System.Diagnostics.Trace.WriteLine($"Parameter {count} is {param.Name}");
+            count++;
+        }
+
+        return base.SetParametersAsync(parameters);
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        return base.OnParametersSetAsync();
+    }
+}

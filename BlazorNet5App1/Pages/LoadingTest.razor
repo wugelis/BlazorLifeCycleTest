@@ -1,0 +1,44 @@
+﻿@page "/loadingtest"
+<h3>LoadingTest</h3>
+
+<div class="image-container">
+
+    @if (State == PageLoadingState.Loading)
+    {
+        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    }
+    else if (State == PageLoadingState.Loaded)
+    {
+        <img src="https://i.imgur.com/8gJA1Io.png" />
+    }
+
+</div>
+
+
+
+@code { 
+
+    public enum PageLoadingState { Loading, Loaded, Error};
+
+    PageLoadingState State;
+
+    protected override async Task OnInitializedAsync()
+    {
+        State = PageLoadingState.Loading;
+
+        await Task.Delay(1000);
+
+        State = PageLoadingState.Loaded;
+
+        await Task.Delay(3000);
+
+        //State = PageLoadingState.Error;
+
+        //return await base.OnInitializedAsync();
+    }
+
+    protected override bool ShouldRender()
+    {
+        return true;
+    }
+}
